@@ -2,14 +2,20 @@
 #define _SCOTTZ0R_NMEA_PARSER_INCLUDE_GUARD
 
 #include <arduino.h>
+#include <math.h>
 
 namespace ScottZ0r
 {
     struct GpsPosition
     {
+        bool has_fix;
         int timestamp;
-        long latitude;
-        long longitude;
+        float latitude;
+        float longitude;
+        int number_satellites;
+        float horizontal_dilution;
+        float altitude_msl;
+        float altitude_wgs_84;
     };
 
     class NmeaParser

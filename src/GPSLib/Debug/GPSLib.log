@@ -1,6 +1,2 @@
-﻿  buffered_gps.cpp
-  nmea_parser.cpp
-  prj_gps_serial_mock.cpp
-  _tests.cpp
-  Generating Code...
+﻿  nmea_parser.cpp
   GPSLib.vcxproj -> E:\GitHub\Arduino-GPS\src\GPSLib\Debug\GPSLib.exe

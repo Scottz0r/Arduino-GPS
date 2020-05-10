@@ -86,7 +86,7 @@ void BufferedGps::process()
     }
     else if (m_state == State::CollectSentence)
     {
-        // Check for overflow condtiion. Account for a null terminator at end (hence -2). Reset if overflowed. Must go
+        // Check for overflow condition. Account for a null terminator at end (hence -2). Reset if overflowed. Must go
         // back to waiting for a valid start character after the failure.
         if (m_p_buffer - m_buffer >= BUFFER_SIZE - 2)
         {
@@ -118,8 +118,8 @@ void BufferedGps::process()
     }
     else if (m_state == State::SentenceReady)
     {
-        // If a new sentence character is present, then switch to collectin the sentence. Otherwise, something happened,
-        // and the serial messages are not vaild, so go back to waiting for a start sentence.
+        // If a new sentence character is present, then switch to collection the sentence. Otherwise, something happened,
+        // and the serial messages are not valid, so go back to waiting for a start sentence.
         if (c == '$')
         {
             start_collecting_sentence();
@@ -151,8 +151,8 @@ void BufferedGps::reset_fail()
 }
 
 /**
-    Clear the sentence state of this objecct. Once cleared, the object will stop reporting a message is ready.
-    
+    Clear the sentence state of this object. Once cleared, the object will stop reporting a message is ready.
+
     Call this after processing a sentence to prevent processing the same sentence multiple times.
 */
 void BufferedGps::clear_sentence()
