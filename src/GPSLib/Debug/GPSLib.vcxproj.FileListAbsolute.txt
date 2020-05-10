@@ -1,2 +1,0 @@
-E:\GitHub\Arduino-GPS\src\GPSLib\Debug\GPSLib.exe
-E:\GitHub\Arduino-GPS\src\GPSLib\Debug\GPSLib.pdb
