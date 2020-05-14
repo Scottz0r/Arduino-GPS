@@ -1,6 +1,10 @@
+#include <stdlib.h>
 #include "nmea_parser.hpp"
+#include "gps_format.hpp"
 
-using namespace ScottZ0r;
+using namespace Scottz0r;
+
+
 
 int main()
 {
@@ -21,6 +25,21 @@ int main()
     success = NmeaParser::parse_gga(msg_1, sizeof(msg_1) - 1, posn);
 
     success = NmeaParser::parse_gga(msg_2, sizeof(msg_2), posn);
+
+    char buffer[13];
+    GpsFormat::format_deg_ddmm(134.9812345f, buffer, sizeof(buffer));
+
+    char buffer_lat[16];
+    GpsFormat::format_lat_ddmm(34.9857123f, buffer_lat, sizeof(buffer_lat));
+
+    char buffer_lon[16];
+    GpsFormat::format_lon_ddmm(-94.7563083333f, buffer_lon, sizeof(buffer_lon));
+
+    char buffer_lon_2[16];
+    GpsFormat::format_lon_ddmm(123.456789, buffer_lon_2, sizeof(buffer_lon_2));
+
+    char deg_buffer[20];
+    GpsFormat::format_deg_ddmm(-98.7568054, deg_buffer, sizeof(deg_buffer));
 
     return 0;
 }

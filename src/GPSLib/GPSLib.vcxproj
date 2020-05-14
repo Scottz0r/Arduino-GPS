@@ -141,12 +141,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="buffered_gps.cpp" />
+    <ClCompile Include="gps_format.cpp" />
     <ClCompile Include="nmea_parser.cpp" />
     <ClCompile Include="prj_gps_serial_mock.cpp" />
     <ClCompile Include="_tests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="buffered_gps.hpp" />
+    <ClInclude Include="gps_format.hpp" />
     <ClInclude Include="mocks\arduino.h" />
     <ClInclude Include="nmea_parser.hpp" />
     <ClInclude Include="prj_gps_serial.hpp" />

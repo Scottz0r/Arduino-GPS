@@ -4,7 +4,7 @@
 
 #include "nmea_parser.hpp"
 
-using namespace ScottZ0r;
+using namespace Scottz0r;
 
 static int hex_to_int(char val);
 
@@ -87,16 +87,23 @@ bool NmeaParser::parse_gga(const char* message, size_t count, GpsPosition& resul
     p_field = split_comma(p_field, remain_count, buffer, sizeof(buffer));
     result.altitude_msl = (float)atof(buffer);
 
-    // Altitude units. TODO: Always M?
+    // Altitude units. Must be meters.
     p_field = split_comma(p_field, remain_count, buffer, sizeof(buffer));
+    if (buffer[0] != 'M' && buffer[0] != 0)
+    {
+        valid = false;
+    }
 
     // Height above WGS-84 ellipsoid
     p_field = split_comma(p_field, remain_count, buffer, sizeof(buffer));
     result.altitude_wgs_84 = (float)atof(buffer);
 
-    // Height units. TODO: Always M?
+    // Units, must be meters.
     p_field = split_comma(p_field, remain_count, buffer, sizeof(buffer));
-
+    if (buffer[0] != 'M' && buffer[0] != 0)
+    {
+        valid = false;
+    }
 
     // Reset output state if not valid.
     if (!valid)

@@ -4,7 +4,7 @@
 #include <arduino.h>
 #include <math.h>
 
-namespace ScottZ0r
+namespace Scottz0r
 {
     struct GpsPosition
     {

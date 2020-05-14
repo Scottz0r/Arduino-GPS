@@ -27,6 +27,9 @@
     <ClCompile Include="prj_gps_serial_mock.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="gps_format.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="buffered_gps.hpp">
@@ -39,6 +42,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="mocks\arduino.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gps_format.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
