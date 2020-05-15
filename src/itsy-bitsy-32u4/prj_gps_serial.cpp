@@ -17,6 +17,7 @@ int GpsSerial::available()
 
 int GpsSerial::read()
 {
+    // Also print to serial to see NMEA messages.
     int c = Serial1.read();
     Serial.write(c);
     return c;
