@@ -40,8 +40,6 @@ void setup()
 
     gps.begin();
 
-
-
     tft.init(135, 240);
     tft.setRotation(0);
     tft.fillScreen(0x0000);
