@@ -52,12 +52,12 @@ bool GpsFormat::format_lon_ddmm(float deg, char* dst, size_t dst_size)
     float abs_deg;
     if (deg < 0)
     {
-        dst[0] = 'E';
+        dst[0] = 'W';
         abs_deg = -1 * deg;
     }
     else
     {
-        dst[0] = 'W';
+        dst[0] = 'E';
         abs_deg = deg;
     }
 

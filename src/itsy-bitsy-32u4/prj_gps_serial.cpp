@@ -4,6 +4,7 @@
     Assumes that Serial1 will be initialized before use of this class.
 */
 #include <HardwareSerial.h>
+#include <Arduino.h>
 
 #include "prj_gps_serial.hpp"
 
@@ -16,5 +17,9 @@ int GpsSerial::available()
 
 int GpsSerial::read()
 {
-    return Serial1.read();
+    int c = Serial1.read();
+    Serial.write(c);
+    return c;
+
+    // return Serial1.read();
 }
