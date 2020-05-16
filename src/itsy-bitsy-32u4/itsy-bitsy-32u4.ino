@@ -75,26 +75,18 @@ void loop()
 
     gps.process();
 
-    // Super messy, but prototype code. Fix later.
-    // Should probably always run this stuff, but leave displaying stuff to specific "screens".
-    // TODO: Also need to know if it's been too long since getting data? like > 10 seconds?
+    // Handle complete NMEA GPS sentences.
     if(gps.sentence_available())
     {
         if(!NmeaParser::checksum(gps.sentence(), gps.sentence_size()))
         {
             next_state = STATE_FAIL;
-
-            Serial.print("Checksum Fail: ");
-            Serial.print(gps.sentence());
         }
         else if(strncmp(gps.sentence(), "$GPGGA", sizeof("$GPGGA") - 1) == 0)
         {
             if(!NmeaParser::parse_gga(gps.sentence(), gps.sentence_size(), gps_posn))
             {
                 next_state = STATE_FAIL;
-
-                Serial.print("Parse Fail: ");
-                Serial.print(gps.sentence());
             }
             else if(gps_posn.has_fix)
             {
@@ -113,15 +105,15 @@ void loop()
     // of data at once, and writing the display is super slow.
     if(next_state != STATE_NO_CHANGE)
     {
+        // Start the timer if it has not been started.
         if(last_state_change == 0)
         {
-            Serial.println("Starting state change timer...");
             last_state_change = millis();
         }
 
+        // Call display handler once enough time has passed.
         if(millis() - last_state_change >= DISPLAY_DELAY_MS)
         {
-            Serial.println("Now changing state.");
             handle_display(next_state);
 
             // Reset waiting variables for next state switch.
@@ -145,7 +137,6 @@ void handle_display(int state)
     if(last_state != state)
     {
         tft.fillScreen(0x0000);
-        state = STATE_POSITION;
     }
 
     switch(state)
