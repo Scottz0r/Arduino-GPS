@@ -5,14 +5,17 @@ using namespace scottz0r::gps;
 
 constexpr auto FLASH_MS = 1000; // Flash delay for active indicator.
 
+#define MAX_PRINT_LINES 10
+
 TftDisplay::TftDisplay(int cs, int dc, int rst)
     : m_tft(cs, dc, rst)
-    , m_state(DisplayState::Startup)
+    , m_state(DisplayState::PrintMode)
     , m_wait_start(0)
     , m_render_state(PositionRenderState::Start)
     , m_gps_position({})
     , m_last_flash(0)
     , m_flash_state(false)
+    , m_print_lines(0)
 {   
 }
 
@@ -30,6 +33,7 @@ void TftDisplay::init()
 
 void TftDisplay::process()
 {
+    // Only do processing ticks / incremental screen updates for specific types.
     if(m_state == DisplayState::Position)
     {
         process_gps_position();
@@ -80,6 +84,45 @@ void TftDisplay::display_fail()
     m_tft.setTextColor(0xFFFF, 0x0000);
     m_tft.setTextSize(2);
     m_tft.print("GPS Fail!");
+
+    m_state = DisplayState::Fail;
+}
+
+void TftDisplay::start_print_mode()
+{
+    m_state = DisplayState::PrintMode;
+    clear_screen();
+    m_tft.setCursor(0, 0);
+    m_tft.setTextSize(1);
+    m_tft.setTextColor(0xFFFF, 0x0000);
+}
+
+void TftDisplay::println(const __FlashStringHelper* msg)
+{
+    if(m_state != DisplayState::PrintMode)
+    {
+        return;
+    }
+
+    if(m_print_lines > MAX_PRINT_LINES)
+    {
+        // TODO: A better method would be knowing how tall screen is and inspecing where cursor is.
+        clear_screen();
+        m_tft.setCursor(0, 0);
+    }
+
+    m_tft.println(msg);
+    ++m_print_lines;
+}
+
+void TftDisplay::print(const __FlashStringHelper* msg)
+{
+    if(m_state != DisplayState::PrintMode)
+    {
+        return;
+    }
+
+    m_tft.print(msg);
 }
 
 void TftDisplay::clear_screen()
@@ -107,8 +150,6 @@ void TftDisplay::process_gps_position()
     }
     else if(m_render_state == PositionRenderState::Other)
     {
-        auto render_start = millis();
-
         // Print other GPS stuff, and pad at end to account for changes magnitude of numbers.
         m_tft.print(F("Satellites: "));
         m_tft.print(m_gps_position.number_satellites);
@@ -124,11 +165,6 @@ void TftDisplay::process_gps_position()
         m_tft.println(F("    "));
 
         m_render_state = PositionRenderState::HDOP;
-
-        auto render_time = millis() - render_start;
-        Serial.print("Other render time: ");
-        Serial.print(render_time);
-        Serial.println("ms");
     }
     else if(m_render_state == PositionRenderState::HDOP)
     {

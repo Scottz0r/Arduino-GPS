@@ -9,10 +9,10 @@ class TftDisplay
 {
     enum class DisplayState
     {
-        Startup,
         Waiting,
         Position,
-        Fail
+        Fail,
+        PrintMode
     };
 
     enum class PositionRenderState
@@ -36,7 +36,11 @@ public:
 
     void display_fail();
 
-    // TODO: Splash screen / startup?
+    void start_print_mode();
+
+    void println(const __FlashStringHelper* msg);
+
+    void print(const __FlashStringHelper* msg);
 
 private:
     void clear_screen();
@@ -59,8 +63,13 @@ private:
     scottz0r::gps::GpsPosition m_gps_position;
 
     // For process_indicator
-    unsigned long m_last_flash = 0;
-    bool m_flash_state = false;
+    unsigned long m_last_flash;
+    bool m_flash_state;
+
+    // For pint mode, number of lines before refresh.
+    int m_print_lines;
 };
+
+extern TftDisplay tft_display;
 
 #endif // _ITSY_BITSY_32U4_PRJ_DISPLAY_INCLUDE_GUARD_H
