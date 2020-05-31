@@ -21,13 +21,15 @@ namespace mtk3339
         bool setup_rc;
 
         // Write 0 to the GPS Enable pin, ensuring a shutdown of the GPS module.
+        tft_display.print(F("GPS OFF..."));
         digitalWrite(PIN_GPS_ENABLE, LOW);
 
         // Start serial ith default baud of 9600.
         GpsSerial.begin(9600);
 
         // Write 1 to the GPS Enable pin, powring up the GPS
-        delay(250);
+        delay(500);
+        tft_display.println(F("Now ON!"));
         digitalWrite(PIN_GPS_ENABLE, HIGH);
 
         // Wait for the special startup messages.
