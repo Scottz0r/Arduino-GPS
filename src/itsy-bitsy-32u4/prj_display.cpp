@@ -78,12 +78,65 @@ void TftDisplay::display_wait()
 
 void TftDisplay::display_fail()
 {
+    const char FAIL_MSG[] = "GPS FAIL";
+
+    // Do not redraw screen if state is already in Fail mode.
+    if(m_state == DisplayState::Fail)
+    {
+        return;
+    }
+
     clear_screen();
 
-    m_tft.setCursor(0, 0);
-    m_tft.setTextColor(0xFFFF, 0x0000);
+    // Draw a yellow triangle on the top half of the screen.
+    uint16_t x0, y0, x1, y1, x2, y2, h;
+
+    // Height is half of the screen.
+    h = m_tft.height() / 2;
+
+    uint16_t half_width = m_tft.width() / 2;
+    uint16_t half_height = (m_tft.height() / 2);
+
+    // x1, y1 will be at the top center of the screen.
+    x1 = half_width;
+    y1 = 1;
+
+    // For an issolies triangle, h = sqrt(3)/2 * a, so a = 2/sqrt(3) * h
+    // Also, is 2 * h / tan(60) = 2 * h / sqrt(3).
+    // 2 / sqrt(3) == approx 1.1547
+    // To put the triangle in the middle, take (width() / 2) +/- ((h * 1.1547) / 2)
+    uint16_t half_side_length = (uint16_t)(h * 1.547f / 2.0f);
+
+    x0 = half_width - half_side_length;
+    y0 = h;
+
+    x2 = half_width + half_side_length;
+    y2 = h;
+
+    m_tft.fillTriangle(x0, y0, x1, y1, x2, y2, 0xFFE0);
+
+    // Draw an exclamation mark in the middle.
+    x0 = half_width - 7;
+    y0 = (half_height / 2) - 4;
+    m_tft.drawChar(x0, y0, '!', 0x0000, 0xFFE0, 3);
+
+    // Render the message under the triangle (2px padding)
+    // Must set text size before computations!
     m_tft.setTextSize(2);
-    m_tft.print("GPS Fail!");
+
+    uint16_t cursor_y = half_height + 4;
+
+    int16_t not_used_s;
+    uint16_t txt_h, txt_w;
+    m_tft.getTextBounds(FAIL_MSG, 0, 0, &not_used_s, &not_used_s, &txt_w, &txt_h);
+
+    // Center text by taking half screen width minus half the text width.
+    uint16_t cursor_x = half_width - (txt_w / 2);
+
+    // Finally, render the text in the center of the screen.
+    m_tft.setCursor(cursor_x, cursor_y);
+    m_tft.setTextColor(0xFFFF);
+    m_tft.print(FAIL_MSG);
 
     m_state = DisplayState::Fail;
 }

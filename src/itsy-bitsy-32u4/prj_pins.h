@@ -16,4 +16,10 @@
 
 #define DEBUG_MESSAGES 0
 
+// Watchdog timeout for waiting for GPS messages over serial connection.
+#define SERIAL_WATCHDOG_TIMEOUT_MS 10000
+
+// Maximum number of sequential bad NMEA messages before hard erroring.
+#define MAX_BAD_NMEA_MESSAGES 3
+
 #endif // _PRJ_PINS_INCLUDE_GUARD
