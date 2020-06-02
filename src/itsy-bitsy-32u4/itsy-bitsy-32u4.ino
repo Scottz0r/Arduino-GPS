@@ -12,7 +12,7 @@
 #include <MicroGps.h>
 #include <MicroGpsFormat.h>
 
-#include "prj_pins.h"
+#include "prj_config.h"
 #include "prj_display.h"
 #include "mtk3339_startup.h"
 #include "message_watchdog.h"
