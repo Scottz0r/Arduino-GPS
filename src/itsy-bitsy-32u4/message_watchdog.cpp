@@ -1,5 +1,5 @@
-#include <Arduino.h>
 #include "message_watchdog.h"
+#include <Arduino.h>
 
 /// @brief Initialize a watchdog time with a specific timeout, in milliseconds.
 ///

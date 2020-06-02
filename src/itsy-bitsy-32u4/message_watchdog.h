@@ -5,6 +5,7 @@
 class MessageWatchdog
 {
     using time_type = unsigned long;
+
 public:
     MessageWatchdog(time_type timeout);
 

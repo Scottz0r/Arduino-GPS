@@ -3,17 +3,17 @@
 
 namespace mtk3339
 {
-    using size_type = unsigned;
-    using time_type = unsigned long;
+using size_type = unsigned;
+using time_type = unsigned long;
 
-    enum class ReturnCode
-    {
-        Ok = 0,
-        StartupError = 1,
-        ConfigError = 2
-    };
+enum class ReturnCode
+{
+    Ok = 0,
+    StartupError = 1,
+    ConfigError = 2
+};
 
-    ReturnCode init();
-}
+ReturnCode init();
+} // namespace mtk3339
 
 #endif // _MTK3339_STARTUP_INCLUDE_GUARD

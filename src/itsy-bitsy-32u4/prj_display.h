@@ -2,8 +2,8 @@
 #define _ITSY_BITSY_32U4_PRJ_DISPLAY_INCLUDE_GUARD_H
 
 #include <Adafruit_ST7789.h>
-#include <arduino.h>
 #include <MicroGps.h>
+#include <arduino.h>
 
 class TftDisplay
 {
@@ -30,7 +30,7 @@ public:
 
     void process();
 
-    void display_position(const scottz0r::gps::GpsPosition& gps_position);
+    void display_position(const scottz0r::gps::GpsPosition &gps_position);
 
     void display_wait();
 
@@ -38,9 +38,9 @@ public:
 
     void start_print_mode();
 
-    void println(const __FlashStringHelper* msg);
+    void println(const __FlashStringHelper *msg);
 
-    void print(const __FlashStringHelper* msg);
+    void print(const __FlashStringHelper *msg);
 
 private:
     void clear_screen();
